@@ -1,0 +1,66 @@
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <a class="navbar-brand" href="#">Company</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Start project <span class="sr-only">(current)</span></a>
+      </li>
+     
+     
+      
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+        <a  class="nav-link nav-item active " id="login-tag" href="#">login<span class="sr-only">(current)</span></a>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SignUp</button>
+    </form>
+  </div>
+</nav>
+
+
+<div class="alert alert-primary" role="alert">
+  {{this.msg}}
+</div>
+<form method="POST" action="/users/forgotten" class="mt-5 ">
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control"  name="email" id="email" value="{{this.email}}" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">OTP</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputPassword3" name="otp" placeholder="OTP">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="txtPassword" name="password" value="{{this.password}}" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-2 col-form-label" >Confirm Password</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="txtConfirmPassword" name="confirmpassword" placeholder="confirm password">
+    </div>
+  </div>
+  
+ 
+  <div class="form-group row">
+    <div class="col-md-12">
+      <button type="submit" id="btnSubmit" class="btn btn-primary mt-5" style="margin-left: 50%;">Save</button>
+    </div>
+  </div>
+</form>
+
+
+
