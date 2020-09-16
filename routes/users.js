@@ -61,19 +61,9 @@ router.post('/forgotten',(req,res)=>{
 
 });
 
-router.get('/start_project',(req,res)=>{
-  res.render('startProject',{style:'start_project.css'});
-});
 
-router.get('/rules',(req,res)=>{
-  res.render('project_rules',{style:'project_rules.css'});
-});
 
-router.post('/start_project',(req,res)=>{
-   const{category,country,discription,checkbox_1,checkbox_2,price,target,image,video}=req.body;
-   
 
-});
 
 
 
