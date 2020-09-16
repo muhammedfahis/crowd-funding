@@ -72,8 +72,10 @@ router.get('/rules',(req,res)=>{
 router.post('/start_project',(req,res)=>{
    const{category,country,discription,checkbox_1,checkbox_2,price,target,image,video}=req.body;
    
-   
-})
+
+});
+
+
 
 
 
