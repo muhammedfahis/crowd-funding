@@ -55,7 +55,31 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <img class="card-img-top" src="../uploads/download.png" alt="Card image cap">
+                    <img src="../uploads/download.png" alt="">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">{{this.discription}}</p>
+                        <a href="#" class="btn btn-primary">{{this.target}}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{this.img}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">{{this.discription}}</p>
+                        <a href="#" class="btn btn-primary">{{this.target}}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{this.img}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">{{this.discription}}</p>
@@ -65,6 +89,8 @@
             </div>
         </div>
     </div>
+
+    
     {{/each}}
 
     <div class="footer-dark">

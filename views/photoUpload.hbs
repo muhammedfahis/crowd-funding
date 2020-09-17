@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+	<a class="navbar-brand" href="#">Company</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="#">Start project <span class="sr-only">(current)</span></a>
+			</li>
+
+		</ul>
+		<form class="form-inline my-2 my-lg-0">
+			<a class="nav-link nav-item active " id="login-tag" href="#">login<span class="sr-only">(current)</span></a>
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">SignUp</button>
+		</form>
+	</div>
+</nav>
+
+<form action="/products/upload_photo" method="post" enctype="multipart/form-data">
+    
+    <div class="row">
+
+		<div class="col-md-12">
+			<h3 class="mt-5" style="margin-left: 35%;"> let’s input image</h3>
+			<p
+				style="margin-left: 35%;  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+				Choose an image</p>
+
+			<div class="input-group" id="image-input">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+				</div>
+				<div class="custom-file">
+					<input type="file" class="custom-file-input ml-5" name="image" id="inputGroupFile01"
+						aria-describedby="inputGroupFileAddon01">
+					<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+
+
+	<div class="row">
+
+		<div class="col-md-12">
+			<h3 class="mt-5" style="margin-left: 35%;"> let’s input video</h3>
+			<p
+				style="margin-left: 35%;  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+				Choose an video(optional)</p>
+
+			<div class="input-group" id="image-input">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+				</div>
+				<div class="custom-file">
+					<input type="file" class="custom-file-input ml-5" name="video" id="inputGroupFile01"
+						aria-describedby="inputGroupFileAddon01">
+					<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+     <button type="submit" class="btn btn-success mt-5" style="margin-left: 43%;" >Upload</button>
+</form>
