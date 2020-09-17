@@ -1,4 +1,5 @@
 const mongoose =require('mongoose');
+const { on } = require('./User');
 
 
 const productSchema=new mongoose.Schema({
@@ -8,6 +9,10 @@ const productSchema=new mongoose.Schema({
     price:String,
     target:String,
     img:{data:Buffer,ContentType:String},
+    checkbox_1:String,
+    checkbox_2:String,
+    country:String,
+    video:{data:Buffer,ContentType:String}
 
 
 });
