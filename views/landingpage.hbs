@@ -34,64 +34,71 @@
 </nav>
 <div>
 
-    <body>
+    <body class="bg-danger">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                            aria-expanded="false" type="button">categories</button>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second
-                                Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
-                    </div>
-                </div>
+        <div class="container"> 
+            <div class="row " style="margin-left: 15%; ">
+                <nav class="navbar navbar-expand-lg navbar-light ">
+ 
+  <div class="collapse navbar-collapse" id="navbarNav" style="">
+    <ul class="navbar-nav" style="padding-left: 32%;">
+      <li class="nav-item active">
+        <a class="nav-link ml-5" href="#" style="color: white;">Art <span class="sr-only">(current)</span></a>
+      </li>
+       <li class="nav-item active">
+        <a class="nav-link ml-5" href="#" style="color: white;" >Tech <span class="sr-only">(current)</span></a>
+      </li>
+       <li class="nav-item active">
+        <a class="nav-link ml-5" href="#" style="color: white;">Fashion <span class="sr-only">(current)</span></a>
+      </li>
+       <li class="nav-item active">
+        <a class="nav-link ml-5" href="#" style="color: white;">Craft <span class="sr-only">(current)</span></a>
+      </li>
+      
+      
+    </ul>
+  </div>
+</nav>
             </div>
         </div>
 </div>
 <div>
-{{#each data}}
-    <div class="container">
+
+
+
+
+    <div class="container ">
+      
         <div class="row">
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="../uploads/download.png" alt="Card image cap">
-                    <img src="../uploads/download.png" alt="">
+            {{#each data}}
+            
+            <div class=" col-md-4 ">
+                 <div class="card" style="width: 18rem;height: 20rem;">
+                    <img class="card-img-top" src="/images/{{this.img}}" class="img-fluid" width="75px" height="200px"
+                        alt="Card image cap">
 
+                    
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">{{this.discription}}</p>
-                        <a href="#" class="btn btn-primary">{{this.target}}</a>
+                       <p class="card-title">{{this.discription}}</p>
+
+                        <a href="/products/items" class="btn btn-primary">{{this.target}}</a>
+                        <a href=""> <form action="/products/items" method="post"></a>
+                       
+                        
+                            <input type="hidden" value="{{this._id}}">
+
+                        </form>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{{this.img}}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">{{this.discription}}</p>
-                        <a href="#" class="btn btn-primary">{{this.target}}</a>
-                    </div>
-                </div>
-            </div>
+            {{/each}}
 
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{{this.img}}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">{{this.discription}}</p>
-                        <a href="#" class="btn btn-primary">{{this.target}}</a>
-                    </div>
-                </div>
-            </div>
+
+
         </div>
     </div>
 
-    
-    {{/each}}
 
     <div class="footer-dark">
         <footer>
@@ -115,8 +122,10 @@
                     </div>
                     <div class="col-md-6 item text">
                         <h3>Company Name</h3>
-                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula
-                            rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut
+                            vehicula
+                            rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar
+                            dictum
                             vel in justo.</p>
                     </div>
                     <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i

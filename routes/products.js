@@ -6,11 +6,22 @@ const mkdirp=require('mkdirp');
 const resizeimg=require('resize-img');
 const multer=require('multer');
 const path=require('path');
-const upload=require('express-fileupload');
 
 
 
 
+var Storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./public/images");
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + "_" + Date.now() + "_" + path.extname(file.originalname));
+  },
+});
+
+var upload = multer({
+  storage: Storage,
+}).single("image"); //Field name and max count
 
 
 
@@ -25,9 +36,15 @@ router.get('/rules',(req,res)=>{
 
 
 router.post('/project_upload',(req,res)=>{
-
-  
-    const newProduct=new Product({
+  upload(req,res,(err)=>{
+    if(err){
+      console.log(err);
+    }else{
+      console.log(req.file.path);
+      
+      var filename= req.file.filename
+      
+     const newProduct=new Product({
       category:req.body.category,
       country:req.body.country,
       discription:req.body.discription,
@@ -35,52 +52,54 @@ router.post('/project_upload',(req,res)=>{
       checkbox_2:req.body.checkbox_2,
       price:req.body.price,
       target:req.body.target,
+      img:filename
      
     });
- 
-   newProduct.save()
-   res.redirect('/products/upload_photo')
-
+    newProduct.save()
+  }
   });
+ });
 
 
 router.get('/upload_photo',(req,res)=>{
   res.render('photoUpload',{style:'photo_upload.css'});
 });
 
-router.post('/upload_photo',(req,res)=>{
 
-  if(req.files){
-    var imagefile=req.files.image;
-    var videofile=req.files.video
-
-    var videoname=videofile.name
-    var imagename=imagefile.name
-
-    imagefile.mv('./uploads/'+imagename,(err)=>{
-      if(err) throw err;
-    })
-    }
-    console.log(imagename);
-
-    const newPhoto=new Product({
-      img:req.files.image,
-      video:req.files.video
-    })
-    newPhoto.save();
-})
 
 
 router.get('/landingpage',(req,res)=>{
-  Product.find({}).lean().exec((err,data)=>{
+  Product.find({}).exec((err,data)=>{
     if(err) throw err;
     console.log (data)
-    
-    res.render('landingpage',{data:data,style:'landingpage.css'});
+     res.render('landingpage',{data:data,style:'landingpage.css'});
+  })
+})
+
+router.get('/items',(req,res)=>{
+ 
+
+  Product.find({}).exec((err,data)=>{
+    if(err)throw err;
+    console.log(data);
+    res.render('product_page',{data:data,style:'product_page.css'});
+ 
   })
 })
 
 
+
+router.post('/items',(req,res)=>{
+  const id=req.body._id;
+
+  Product.find({_id:id}).exec((err,data)=>{
+    if(err)throw err;
+    console.log(data);
+    res.render('product_page',{data:data,style:'product_page.css'});
+
+});
+
+});
 
 
   module.exports=router;
