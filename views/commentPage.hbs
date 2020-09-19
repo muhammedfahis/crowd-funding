@@ -78,9 +78,15 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			{{#each data}}
-		<p>{{this.details}}</p>
-		{{/each}}
+            {{#each data}}
+		<form method="POST" action="/products/comments/:{{this._id}}">
+        {{/each}}
+    <div class="form-group">
+      <label for="comment">Comment:</label>
+      <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
+    </div>
+    <button type="submit">comment</button>
+  </form>
 		</div>
 	</div>
 </div>

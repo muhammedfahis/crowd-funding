@@ -14,7 +14,7 @@
 
 
 <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-    <div class="container"><a class="navbar-brand" href="#">Company Name</a><button data-toggle="collapse"
+    <div class="container"><a class="navbar-brand" href="/products/landingpage">Company Name</a><button data-toggle="collapse"
             class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-1">
@@ -75,6 +75,7 @@
             {{#each data}}
             
             <div class=" col-md-4 ">
+                <a href="/products/items/{{this._id}}">
                  <div class="card" style="width: 18rem;height: 20rem;">
                     <img class="card-img-top" src="/images/{{this.img}}" class="img-fluid" width="75px" height="200px"
                         alt="Card image cap">
@@ -83,14 +84,12 @@
                     <div class="card-body">
                        <p class="card-title">{{this.discription}}</p>
 
-                        <a href="/products/items" class="btn btn-primary">{{this.target}}</a>
-                        <a href=""> <form action="/products/items" method="post"></a>
+                        <a href="" class="btn btn-primary">{{this.target}}</a>
                        
                         
-                            <input type="hidden" value="{{this._id}}">
-
-                        </form>
-                    </div>
+                       </a>
+                        
+                     </div>
                 </div>
             </div>
 
