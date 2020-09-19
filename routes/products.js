@@ -71,7 +71,7 @@ router.get('/upload_photo',(req,res)=>{
 router.get('/landingpage',(req,res)=>{
   Product.find({}).exec((err,data)=>{
     if(err) throw err;
-    console.log (data)
+    
      res.render('landingpage',{data:data,style:'landingpage.css'});
   })
 })
@@ -81,7 +81,7 @@ router.get('/items',(req,res)=>{
 
   Product.find({}).exec((err,data)=>{
     if(err)throw err;
-    console.log(data);
+    
     res.render('product_page',{data:data,style:'product_page.css'});
  
   })
@@ -94,7 +94,7 @@ router.post('/items',(req,res)=>{
 
   Product.find({_id:id}).exec((err,data)=>{
     if(err)throw err;
-    console.log(data);
+   
     res.render('product_page',{data:data,style:'product_page.css'});
 
 });
