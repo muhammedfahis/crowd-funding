@@ -5,6 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose=require('mongoose');
 var upload=require('express-fileupload');
+var session= require('express-session');
+var bodyParser= require('body-parser');
+var router =express.Router();
+
+
 
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
@@ -12,6 +17,15 @@ var productRouter=require('./routes/products');
 var categoryRouter=require('./routes/categories');
 
 var app = express();
+app.use(router)
+
+app.set('etag', false);
+
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store')
+  next()
+})
+
 
 
 mongoose.connect('mongodb://localhost/mydb',
@@ -23,15 +37,21 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 
 app.use(express.json());
+// app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }))
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', adminRouter);
+
 app.use('/users', usersRouter);
 app.use('/products',productRouter);
 app.use('/categories',categoryRouter);
+app.use('/', adminRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

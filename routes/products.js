@@ -6,6 +6,8 @@ const mkdirp = require('mkdirp');
 const resizeimg = require('resize-img');
 const multer = require('multer');
 const path = require('path');
+const session= require( 'express-session');
+const userLoginChecker= require('./users');
 
 
 
@@ -29,7 +31,7 @@ router.get('/start_project', (req, res) => {
   res.render('startProject', { style: 'start_project.css' });
 });
 
-router.get('/rules', (req, res) => {
+router.get('/rules', userLoginChecker, (req, res) => {
   res.render('project_rules', { style: 'project_rules.css' });
 });
 
@@ -56,6 +58,10 @@ router.post('/project_upload', (req, res) => {
         img: filename
 
       });
+
+      // if(newProduct.checkbox_1 != 'on' && newProduct.checkbox_2 != 'on'){
+      //   res.render('')
+      // }
       newProduct.save()
     }
   });
@@ -98,20 +104,30 @@ router.get('/comments/:id', (req, res) => {
   })
 });
 
-// router.post('/comments/:id',(req,res)=>{
+router.post('/comments',(req,res)=>{
+  
+  
+  console.log(req.body._id);
+  console.log(req.body.comment);
 
-//   const comment =req.body.comment
-//   const id = req.params.id ;
+  // var commentDate = new Date(Date.now());
+  // commentDate = commentDate.toDateString();
+  Product.updateOne({_id:req.body._id},{$push:{comments:req.body.comment,username:req.body.username,Date:Date.now()}},((err,data)=>{
+    if(err) throw err;
 
-//   Product.update({_id:id},{$set:{comments:comment}},(err)=>{
-//     if(err) throw err;
-//   })
+  Product.find({_id:req.body._id}).lean().exec((err,data)=>{
+    if(err) throw err;
+    
+    res.render('commentPage',{data:data,style:'product_page.css'});
+  })
+
+  }));
 
 
 
 
 
-// })
+})
 
 
 

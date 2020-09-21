@@ -1,6 +1,34 @@
 var express = require('express');
 var router = express.Router();
 var User=require('../models/User');
+var session= require('express-session');
+
+router.use(session({
+  secret:'ok',
+  name:'userCookie',
+  saveUninitialized:false,
+  resave:false,
+  
+  cookie:{
+    maxAge:60*1000*60*60*24*30
+  }
+}));
+
+const userLoginChecker= (req,res,next)=>{
+  if(!req.session.email){
+    res.redirect('/user/login');
+  }else{
+    next();
+  }
+}
+
+// const DirectToDashboard = (req,res,next) =>{
+//   if(req.session.email){
+//     res
+//   }
+// }
+
+
 
 router.get('/signup',(req,res)=>{
   res.render('signup',{style:'signup.css'});
@@ -17,6 +45,7 @@ router.post('/signup',(req,res)=>{
      email:email,
      name:name,
      password:password
+   
    });
   }
    newUser.save();
@@ -33,11 +62,15 @@ router.get('/login',(req,res)=>{
 });
 router.post('/login',(req,res)=>{
   const {email,password}=req.body;
-  User.find({email:email,password:password}).exec((err,data)=>{
+  
+  
+  User.findOne({email:email,password:password}).lean().exec((err,data)=>{
     if(data){
-      res.redirect('/users');
+      var isLogged;
+      req.session.email = 1;
+      res.render('landingpage',{isLogged:true,style:'landingpage.css'});
     }else{
-      res.render('login',{msg:'error'});
+      res.render('login',{msg:'error',style:'login.css'});
     }
   })
 });
@@ -55,7 +88,7 @@ router.post('/forgotten',(req,res)=>{
     User.updateOne({email:email},{$set:{password:password}},(err)=>{
       if(err) throw err;
     });
-    res.redirect('/users');
+    res.redirect('/products/landingpage');
     
   }
 
@@ -70,5 +103,5 @@ router.post('/forgotten',(req,res)=>{
 
 
 
-
+module.exports =userLoginChecker;
 module.exports = router;

@@ -13,7 +13,9 @@ const productSchema = new mongoose.Schema({
     checkbox_2: String,
     country: String,
     details: String,
-    comments: String
+    comments: Array,
+    username:Array,
+    Date:{ type: Date, required: true }
 
 
 
