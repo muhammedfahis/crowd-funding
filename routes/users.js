@@ -9,6 +9,22 @@ const resizeimg = require('resize-img');
 const multer = require('multer');
 const path = require('path');
 
+
+var Storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./public/images");
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + "_" + Date.now() + "_" + path.extname(file.originalname));
+  },
+});
+
+var upload = multer({
+  storage: Storage,
+}).single("image"); //Field name and max count
+
+
+
 router.use(session({
   secret: 'ok',
   name: 'userCookie',
@@ -19,6 +35,7 @@ router.use(session({
     maxAge: 60 * 1000 * 60 * 60 * 24 * 30
   }
 }));
+
 
 const userLoginChecker = (req, res, next) => {
   if (!req.session.email) {
@@ -79,7 +96,7 @@ router.post('/login', (req, res) => {
         if (err) throw err;
         if (req.session.email) {
           isLogged = true
-          res.render('landingpage', { isLogged, style: 'landingpage.css', data: data });
+          res.render('landingpage', { isLogged, style: 'landingpage.css', data: data,email:req.session.email });
         }else{
           res.render('landingpage', {style: 'landingpage.css', data: data });
         }
@@ -126,9 +143,9 @@ router.get('/art', (req, res) => {
   Product.find({ category: 'Arts' }).exec((err, data) => {
     if (err) throw err;
     var isLogged;
-    if (req.session.email = 1) {
+    if (req.session.email) {
       isLogged = true;
-      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged });
+      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged,email:req.session.email});
     }else{
       res.render('landingpage', { data: data, style: 'landingpage.css'});
 
@@ -142,9 +159,9 @@ router.get('/tech', (req, res) => {
   Product.find({ category: 'Tech' }).exec((err, data) => {
     if (err) throw err;
     var isLogged;
-    if (req.session.email = 1) {
+    if (req.session.email) {
       isLogged = true;
-      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged });
+      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged,email:req.session.email });
     }else{
       res.render('landingpage', { data: data, style: 'landingpage.css' });
     }
@@ -161,8 +178,9 @@ router.get('/fashion', (req, res) => {
     if (err) throw err;
     var isLogged;
     if (req.session.email) {
+      
       isLogged = true;
-      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged });
+      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged,email:req.session.email });
     }else{
       res.render('landingpage', { data: data, style: 'landingpage.css' });
     }
@@ -178,7 +196,7 @@ router.get('/craft', (req, res) => {
     var isLogged;
     if (req.session.email) {
       isLogged = true;
-      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged });
+      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged,email:req.session.email });
     }else{
       res.render('landingpage', { data: data, style: 'landingpage.css'});
     }
@@ -189,26 +207,13 @@ router.get('/craft', (req, res) => {
 
 // products
 
-var Storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, "./public/images");
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + "_" + Date.now() + "_" + path.extname(file.originalname));
-  },
-});
-
-var upload = multer({
-  storage: Storage,
-}).single("image"); //Field name and max count
-
 
 
 router.get('/start_project', (req, res) => {
   var isLogged;
   if (req.session.email) {
     isLogged = true;
-    res.render('startProject', { style: 'start_project.css', isLogged });
+    res.render('startProject', { style: 'start_project.css', isLogged,email:req.session.email });
   }else{
     res.render('startProject', { style: 'start_project.css' });
   }
@@ -218,7 +223,7 @@ router.get('/rules', userLoginChecker, (req, res) => {
   var isLogged;
   if (req.session.email) {
     isLogged = true;
-    res.render('project_rules', { style: 'project_rules.css', isLogged });
+    res.render('project_rules', { style: 'project_rules.css', isLogged,email:req.session.email });
   }else{
     res.render('project_rules', { style: 'project_rules.css' });
   }
@@ -272,7 +277,7 @@ router.get('/landingpage', (req, res) => {
 
     if (req.session.email) {
       isLogged = true;
-      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged });
+      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged,email:req.session.email });
     }else {
       res.render('landingpage', { data: data, style: 'landingpage.css'});
     }
@@ -291,7 +296,7 @@ router.get('/items/:id', (req, res) => {
 
     if (req.session.email) {
       var isLogged = true;
-      res.render('product_page', { data: data, style: 'product_page.css', isLogged });
+      res.render('product_page', { data: data, style: 'product_page.css', isLogged,email:req.session.email });
     }else{
       res.render('product_page', { data: data, style: 'product_page.css' });
     }
@@ -310,7 +315,7 @@ router.get('/comments/:id', (req, res) => {
     var isLogged;
     if (req.session.email) {
       isLogged = true;
-      res.render('commentPage', { data: data, style: 'commentPage.css', isLogged });
+      res.render('commentPage', { data: data, style: 'commentPage.css', isLogged,email:req.session.email });
     }else {
       res.render('commentPage', { data: data, style: 'commentPage.css'});
     }
@@ -334,7 +339,7 @@ router.post('/comments', (req, res) => {
       var isLogged;
       if (req.session.email) {
         isLogged = true;
-        res.render('commentPage', { data: data, style: 'product_page.css', isLogged });
+        res.render('commentPage', { data: data, style: 'product_page.css', isLogged,email:req.session.email });
       }else{
         res.render('commentPage', { data: data, style: 'product_page.css' });
       }
