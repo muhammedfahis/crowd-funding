@@ -13,8 +13,8 @@ var router =express.Router();
 
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
-var productRouter=require('./routes/products');
-var categoryRouter=require('./routes/categories');
+
+
 
 var app = express();
 app.use(router)
@@ -47,9 +47,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/users', usersRouter);
-app.use('/products',productRouter);
-app.use('/categories',categoryRouter);
 app.use('/', adminRouter);
+
 
 
 

@@ -12,14 +12,39 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
-
+{{#if isLogged }} 
 <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-    <div class="container"><a class="navbar-brand" href="/products/landingpage">Company Name</a><button data-toggle="collapse"
+    <div class="container"><a class="navbar-brand" href="/users/landingpage">Company Name</a><button data-toggle="collapse"
             class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav mr-auto">
-                <li class="nav-item" role="presentation"><a class="nav-link " href="/products/rules">start project</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link " href="/users/rules">start project</a></li>
+               
+                <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
+                        aria-expanded="false" href="#">users</a>
+                    <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">My project</a><a class="dropdown-item" role="presentation" href="#">My orders</a></div>
+                </li>
+                  <li class="nav-item" role="presentation"><a class="nav-link" href="/users/logout">logout</a></li>
+            </ul>
+            <span class="navbar-text actions">
+                
+                <a class="btn btn-light action-button" role="button" href="#">Search</a>
+             </span>
+              
+        </div>
+    </div>
+</nav>
+{{else}}
+
+
+<nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+    <div class="container"><a class="navbar-brand" href="/users/landingpage">Company Name</a><button data-toggle="collapse"
+            class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="nav-item" role="presentation"><a class="nav-link " href="/users/rules">start project</a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link" href="/users/login">login</a></li>
                 <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
                         aria-expanded="false" href="#">users</a>
@@ -30,6 +55,8 @@
         </div>
     </div>
 </nav>
+{{/if}}
+
 <div>
 
     <body class="bg-danger">
@@ -41,17 +68,17 @@
   <div class="collapse navbar-collapse" id="navbarNav" style="">
     <ul class="navbar-nav" style="padding-left: 32%;">
       <li class="nav-item active">
-        <a class="nav-link ml-5" href="/categories/art" style="color: white;">Art <span  class="sr-only">(current)</span></a >
+        <a class="nav-link ml-5" href="/users/art" style="color: white;">Art <span  class="sr-only">(current)</span></a >
        
       </li>
        <li class="nav-item active">
-        <a class="nav-link ml-5" href="/categories/tech" style="color: white;" >Tech <span class="sr-only">(current)</span></a>
+        <a class="nav-link ml-5" href="/users/tech" style="color: white;" >Tech <span class="sr-only">(current)</span></a>
       </li>
        <li class="nav-item active">
-        <a class="nav-link ml-5" href="/categories/fashion" style="color: white;">Fashion <span class="sr-only">(current)</span></a>
+        <a class="nav-link ml-5" href="/users/fashion" style="color: white;">Fashion <span class="sr-only">(current)</span></a>
       </li>
        <li class="nav-item active">
-        <a class="nav-link ml-5" href="/categories/craft" style="color: white;">Craft <span class="sr-only">(current)</span></a>
+        <a class="nav-link ml-5" href="/users/craft" style="color: white;">Craft <span class="sr-only">(current)</span></a>
       </li>
     
       
@@ -73,7 +100,7 @@
             {{#each data}}
             
             <div class=" col-md-4 ">
-                <a href="/products/items/{{this._id}}">
+                <a href="/users/items/{{this._id}}">
                  <div class="card" style="width: 18rem;height: 20rem;">
                     <img class="card-img-top" src="/images/{{this.img}}" class="img-fluid" width="75px" height="200px"
                         alt="Card image cap">

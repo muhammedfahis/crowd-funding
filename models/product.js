@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
     details: String,
     comments: Array,
     username:Array,
-    Date:{ type: Date, required: true }
+    Date:Date
 
 
 

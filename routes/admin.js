@@ -52,7 +52,7 @@ router.post('/login',(req,res) => {
     console.log(req.session.username);
     res.redirect('/dashboard');
   } else {
-    res.redirect('/login');
+    res.render('admin_login',{msg:'invalid username or password'});
   }
 });
 
