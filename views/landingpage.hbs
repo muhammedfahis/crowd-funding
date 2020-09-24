@@ -25,12 +25,14 @@
                         aria-expanded="false" href="#">users</a>
                     <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">My project</a><a class="dropdown-item" role="presentation" href="#">My orders</a></div>
                 </li>
-                  <li class="nav-item" role="presentation"><a class="nav-link" href="/users/logout">logout</a></li>
+                  <li class="nav-item" role="presentation"></li>
             </ul>
             <span class="navbar-text actions">
                 
-                <a class="btn btn-light action-button" role="button" href="#">{{email}}</a>
+                <a class=" btn-light action-button" role="button" href="#">{{email}}</a>
                 <a class="btn btn-light action-button" role="button" href="#">Search</a>
+                 <a class="btn btn-light action-button" role="button" href="/users/logout">logout</a>
+                
                 
                
              </span>
@@ -48,13 +50,15 @@
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav mr-auto">
                 <li class="nav-item" role="presentation"><a class="nav-link " href="/users/rules">start project</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="/users/login">login</a></li>
+                
                 <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown"
                         aria-expanded="false" href="#">users</a>
                     <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">My project</a><a class="dropdown-item" role="presentation" href="#">My orders</a></div>
                 </li>
-            </ul><span class="navbar-text actions"> <a class="login" href="/users/signup">signup</a><a
-                    class="btn btn-light action-button" role="button" href="#">Search</a></span>
+            </ul><span class="navbar-text actions"> 
+                <a class="login" href="/users/signup">signup</a>
+                 <a class="login" href="/users/login">login</a>
+                <a class="btn btn-light action-button" role="button" href="#">Search</a></span>
         </div>
     </div>
 </nav>
