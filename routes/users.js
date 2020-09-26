@@ -78,16 +78,16 @@ router.get('/logout', (req, res) => {
 router.get('/art', (req, res) => {
 
   Product.find({ category: 'Arts' }).exec((err, data) => {
-  if (err) throw err;
-  var isLogged;
-  if (req.session.email) {
-    isLogged = true;
-    res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email });
-  } else {
-    res.render('landingpage', { data: data, style: 'landingpage.css' });
+    if (err) throw err;
+    var isLogged;
+    if (req.session.email) {
+      isLogged = true;
+      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email });
+    } else {
+      res.render('landingpage', { data: data, style: 'landingpage.css' });
 
-  }
-})
+    }
+  })
 });
 
 router.get('/tech', (req, res) => {
@@ -101,22 +101,22 @@ router.get('/tech', (req, res) => {
     } else {
       res.render('landingpage', { data: data, style: 'landingpage.css' });
     }
- })
+  })
 });
 
 router.get('/fashion', (req, res) => {
 
   Product.find({ category: 'Fashion' }).exec((err, data) => {
-  if (err) throw err;
-  var isLogged;
-  if (req.session.email) {
+    if (err) throw err;
+    var isLogged;
+    if (req.session.email) {
 
-    isLogged = true;
-    res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email });
-  } else {
-    res.render('landingpage', { data: data, style: 'landingpage.css' });
-  }
-})
+      isLogged = true;
+      res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email });
+    } else {
+      res.render('landingpage', { data: data, style: 'landingpage.css' });
+    }
+  })
 });
 
 router.get('/craft', (req, res) => {
@@ -129,7 +129,7 @@ router.get('/craft', (req, res) => {
     } else {
       res.render('landingpage', { data: data, style: 'landingpage.css' });
     }
-});
+  });
 });
 
 // products
@@ -168,7 +168,7 @@ router.get('/landingpage', (req, res) => {
     } else {
       res.render('landingpage', { data: data, style: 'landingpage.css' });
     }
- })
+  })
 });
 
 // products page
@@ -184,7 +184,7 @@ router.get('/items/:id', (req, res) => {
     } else {
       res.render('product_page', { data: data, style: 'product_page.css' });
     }
-})
+  })
 });
 
 // comment page
@@ -200,7 +200,7 @@ router.get('/comments/:id', (req, res) => {
     } else {
       res.render('commentPage', { data: data, style: 'commentPage.css' });
     }
-})
+  })
 });
 
 
@@ -238,22 +238,26 @@ router.post('/login', (req, res) => {
   User.findOne({ email: email, password: password }).lean().exec((err, data) => {
     if (data) {
       var isLogged;
+      if (data.status === true) {
+        req.session.email = email;
+        res.redirect('/users/landingpage');
+      } else {
+        res.render('login', { msg: 'you have been blocked', style: 'login.css' });
+      }
 
-      req.session.email = email;
 
-      Product.find({}).lean().exec((err, data) => {
-        if (err) throw err;
-        if (req.session.email) {
-          isLogged = true
-          res.render('landingpage', { isLogged, style: 'landingpage.css', data: data, email: req.session.email });
-        } else {
-          res.render('landingpage', { style: 'landingpage.css', data: data });
-        }
+      // Product.find({}).lean().exec((err, data) => {
+      //   if (err) throw err;
+      //   if (req.session.email) {
+      //     isLogged = true
+      //     res.render('landingpage', { isLogged, style: 'landingpage.css', data: data, email: req.session.email });
+      //   } else {
+      //     res.render('landingpage', { style: 'landingpage.css', data: data });
+      //   }
 
-      })
-
+      // })
     } else {
-      res.render('login', { msg: 'error', style: 'login.css' });
+      res.render('login', { msg: 'invalid email or password', style: 'login.css' });
     }
   })
 });
@@ -270,7 +274,7 @@ router.post('/forgotten', (req, res) => {
       if (err) throw err;
     });
     res.redirect('/users/landingpage');
- }
+  }
 });
 
 // product upload
@@ -294,7 +298,7 @@ router.post('/project_upload', (req, res) => {
         target: req.body.target,
         details: req.body.details,
         img: filename,
-        Date:Date.now()
+        Date: Date.now()
 
       });
       newProduct.save()
@@ -308,155 +312,156 @@ router.post('/project_upload', (req, res) => {
 router.post('/comments', (req, res) => {
 
   Product.updateOne({ _id: req.body._id }, { $push: { comments: req.body.comment, username: req.body.username, Date: Date.now() } }, ((err, data) => {
+    if (err) throw err;
+
+    Product.find({ _id: req.body._id }).lean().exec((err, data) => {
       if (err) throw err;
-  
-      Product.find({ _id: req.body._id }).lean().exec((err, data) => {
-        if (err) throw err;
-        var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-          res.render('commentPage', { data: data, style: 'product_page.css', isLogged, email: req.session.email });
-        } else {
-          res.render('commentPage', { data: data, style: 'product_page.css' });
-        }})
-  }));
-  });
-
-  // filter
-
-router.post('/filter',(req,res)=>{
-  if(req.body.conditions === 'new'){
-   
-  Product.find({}).sort({Date:1}).exec((err,data)=>{
-    var isLogged;
+      var isLogged;
       if (req.session.email) {
         isLogged = true;
-      res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-      }else{
-        res.render('landingpage',{data:data,style:'landingpage.css'})
+        res.render('commentPage', { data: data, style: 'product_page.css', isLogged, email: req.session.email });
+      } else {
+        res.render('commentPage', { data: data, style: 'product_page.css' });
       }
-  });
-    
-  }else if(req.body.conditions === 'old'){
+    })
+  }));
+});
 
-    Product.find({}).sort({Date:-1}).exec((err,data)=>{
+// filter
+
+router.post('/filter', (req, res) => {
+  if (req.body.conditions === 'new') {
+
+    Product.find({}).sort({ Date: 1 }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
-    });
-
-  }else if(req.body.conditions === 'high_price'){
-
-    Product.find({}).sort({price:-1}).exec((err,data)=>{
-      var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
 
-  }else if(req.body.conditions === 'low_price'){
-    Product.find({}).sort({price:1}).exec((err,data)=>{
+  } else if (req.body.conditions === 'old') {
+
+    Product.find({}).sort({ Date: -1 }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
 
-  }else if(req.body.conditions === 'under25'){
-    Product.find({price:{$lt:2500}}).exec((err,data)=>{
+  } else if (req.body.conditions === 'high_price') {
+
+    Product.find({}).sort({ price: -1 }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
-  }else if(req.body.conditions === '25to50'){
-    Product.find({price:{$gt:2500,$lt:5000}}).exec((err,data)=>{
+
+  } else if (req.body.conditions === 'low_price') {
+    Product.find({}).sort({ price: 1 }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
-  }else if(req.body.conditions === '50to100'){
-    Product.find({price:{$gt:5000,$lt:10000}}).exec((err,data)=>{
+
+  } else if (req.body.conditions === 'under25') {
+    Product.find({ price: { $lt: 2500 } }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
-  }else if(req.body.conditions == '100*'){
-    Product.find({price:{$gt:10000}}).exec((err,data)=>{
+  } else if (req.body.conditions === '25to50') {
+    Product.find({ price: { $gt: 2500, $lt: 5000 } }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
-  }else if(req.body.conditions === '0-25'){
-    Product.find({target:{$lt:250000}}).exec((err,data)=>{
+  } else if (req.body.conditions === '50to100') {
+    Product.find({ price: { $gt: 5000, $lt: 10000 } }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
-  }else if(req.body.conditions === '25-50'){
-    Product.find({target:{$gt:250000,$lt:500000}}).exec((err,data)=>{
+  } else if (req.body.conditions == '100*') {
+    Product.find({ price: { $gt: 10000 } }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
-  }else if(req.body.conditions === '50-100'){
-    Product.find({target:{$gt:500000,$lt:1000000}}).exec((err,data)=>{
+  } else if (req.body.conditions === '0-25') {
+    Product.find({ target: { $lt: 250000 } }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
-  }else if(req.body.conditions === '100above'){
-    Product.find({target:{$gt:1000000}}).exec((err,data)=>{
+  } else if (req.body.conditions === '25-50') {
+    Product.find({ target: { $gt: 250000, $lt: 500000 } }).exec((err, data) => {
       var isLogged;
-        if (req.session.email) {
-          isLogged = true;
-        res.render('landingpage',{data:data, style: 'landingpage.css', isLogged, email: req.session.email})
-        }else{
-          res.render('landingpage',{data:data,style:'landingpage.css'})
-        }
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
     });
-  }else{
+  } else if (req.body.conditions === '50-100') {
+    Product.find({ target: { $gt: 500000, $lt: 1000000 } }).exec((err, data) => {
+      var isLogged;
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
+    });
+  } else if (req.body.conditions === '100above') {
+    Product.find({ target: { $gt: 1000000 } }).exec((err, data) => {
+      var isLogged;
+      if (req.session.email) {
+        isLogged = true;
+        res.render('landingpage', { data: data, style: 'landingpage.css', isLogged, email: req.session.email })
+      } else {
+        res.render('landingpage', { data: data, style: 'landingpage.css' })
+      }
+    });
+  } else {
     res.redirect('/users/landingpage');
   }
 
-  })
+})
 
 
 

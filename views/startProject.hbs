@@ -382,30 +382,40 @@
 
 	<div class="row">
 
-		<div class="col-md-12">
+		<div class="col-md-8">
 			<h3 class="mt-5" style="margin-left: 35%;">let’s decide price</h3>
 			<p
 				style="margin-left: 35%;  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
 				And don’t worry, you can edit this later, too.</p>
-			<div class="form-group">
-
-				<input type="text" class="form-control  mt-5" id="price_input" name="price" placeholder="Price" required>
-			</div>
+			<div class="input-group mb-3" style="margin-left: 25%;">
+  <div class="input-group-prepend">
+    <span class="input-group-text">$</span>
+  </div>
+  <input type="text" class="form-control" name="price" aria-label="Amount (to the nearest dollar)" required>
+  <div class="input-group-append">
+    <span class="input-group-text">.00</span>
+  </div>
+</div>
 
 		</div>
 	</div>
 
 	<div class="row">
 
-		<div class="col-md-12">
+		<div class="col-md-8 " >
 			<h3 class="mt-5" style="margin-left: 35%;"> let’s decide Target</h3>
 			<p
 				style="margin-left: 35%;  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
 				And don’t worry, you can edit this later, too.</p>
-			<div class="form-group">
-
-				<input type="text" class="form-control  mt-5" id="price_input" name="target" placeholder="Target" required>
-			</div>
+			<div class="input-group mb-3" style="margin-left: 25%;">
+  <div class="input-group-prepend" >
+    <span class="input-group-text">$</span>
+  </div>
+  <input type="text" class="form-control" name="target" aria-label="Amount (to the nearest dollar)" required>
+  <div class="input-group-append">
+    <span class="input-group-text">.00</span>
+  </div>
+</div>
 
 		</div>
 	</div>
@@ -433,10 +443,10 @@
 
 	<div class="row">
 
-		<div class="col-md-12">
-			<div class="form-group">
+		<div class="col-md-10">
+			<div class="form-group" style="margin-left: 25%;" >
 
-				<h3 class="mt-5" style="margin-left: 35%;"> let’s give description</h3>
+				<h3 class="mt-5" style="margin-left: 23%;"> let’s give description</h3>
 				<textarea class="form-control" name="details" id="exampleFormControlTextarea3" rows="7"></textarea>
 			</div>
 		</div>
